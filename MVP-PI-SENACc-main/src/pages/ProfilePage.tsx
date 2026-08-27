@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Breadcrumb, PageHeader } from '@/components/ui/Breadcrumb';
 import { useToast } from '@/hooks/useToast';
-import { User, Mail, Calendar, BookOpenCheck, Users, Star } from 'lucide-react';
 import { useState } from 'react';
 
 export function ProfilePage() {
@@ -21,30 +20,30 @@ export function ProfilePage() {
   };
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in-slow">
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Perfil' }]} />
-      <PageHeader title="Perfil" subtitle="Suas informações pessoais" />
+      <PageHeader title={<>Meu <span className="italic">Perfil</span></>} subtitle="Suas informações pessoais" />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <Card>
-          <CardBody className="flex flex-col items-center text-center">
-            <div className="w-24 h-24 rounded-full bg-amber-100 flex items-center justify-center mb-4">
-              <span className="text-3xl font-bold text-amber-700">AS</span>
+          <CardBody className="flex flex-col items-center text-center py-14">
+            <div className="w-28 h-28 rounded-full border border-ink-200/60 bg-cream-100 flex items-center justify-center mb-8">
+              <span className="font-serif text-4xl font-light text-ink-600">AS</span>
             </div>
-            <h2 className="text-lg font-bold text-stone-800">{form.nome}</h2>
-            <p className="text-sm text-stone-500">{form.email}</p>
-            <div className="flex gap-4 mt-4 text-center">
+            <h2 className="font-serif text-2xl font-light text-ink-900">{form.nome}</h2>
+            <p className="text-sm text-ink-400 mt-2">{form.email}</p>
+            <div className="flex gap-10 mt-10 pt-10 border-t border-ink-100/40 text-center">
               <div>
-                <p className="text-lg font-bold text-stone-800">3</p>
-                <p className="text-xs text-stone-500">Clubes</p>
+                <p className="font-serif text-4xl font-light text-ink-900">3</p>
+                <p className="text-[10px] text-ink-400 tracking-widest-editorial uppercase mt-2">Clubes</p>
               </div>
               <div>
-                <p className="text-lg font-bold text-stone-800">12</p>
-                <p className="text-xs text-stone-500">Avaliações</p>
+                <p className="font-serif text-4xl font-light text-ink-900">12</p>
+                <p className="text-[10px] text-ink-400 tracking-widest-editorial uppercase mt-2">Avaliações</p>
               </div>
               <div>
-                <p className="text-lg font-bold text-stone-800">5</p>
-                <p className="text-xs text-stone-500">Sugestões</p>
+                <p className="font-serif text-4xl font-light text-ink-900">5</p>
+                <p className="text-[10px] text-ink-400 tracking-widest-editorial uppercase mt-2">Sugestões</p>
               </div>
             </div>
           </CardBody>
@@ -54,7 +53,7 @@ export function ProfilePage() {
           <Card>
             <CardHeader title="Editar Perfil" />
             <CardBody>
-              <form onSubmit={handleSave} className="space-y-4">
+              <form onSubmit={handleSave} className="space-y-7">
                 <Input label="Nome" value={form.nome} onChange={(e) => setForm({ ...form, nome: e.target.value })} />
                 <Input label="E-mail" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
                 <Button type="submit" disabled={saving}>{saving ? 'Salvando...' : 'Salvar Alterações'}</Button>

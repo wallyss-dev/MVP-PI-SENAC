@@ -9,17 +9,17 @@ interface BadgeProps {
 }
 
 const variants: Record<Variant, string> = {
-  default: 'bg-stone-100 text-stone-700 border-stone-200',
-  success: 'bg-green-100 text-green-800 border-green-200',
-  warning: 'bg-amber-100 text-amber-800 border-amber-200',
-  error: 'bg-red-100 text-red-800 border-red-200',
-  info: 'bg-blue-100 text-blue-800 border-blue-200',
-  amber: 'bg-amber-100 text-amber-800 border-amber-200',
+  default: 'bg-transparent text-ink-500 border-ink-300/50',
+  success: 'bg-transparent text-green-700 border-green-300/50',
+  warning: 'bg-transparent text-amber-700 border-amber-300/50',
+  error: 'bg-transparent text-red-600 border-red-300/50',
+  info: 'bg-transparent text-blue-700 border-blue-300/50',
+  amber: 'bg-transparent text-accent-600 border-accent-300/50',
 };
 
 export function Badge({ variant = 'default', children, className = '' }: BadgeProps) {
   return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${variants[variant]} ${className}`}>
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium border tracking-wider-editorial uppercase ${variants[variant]} ${className}`}>
       {children}
     </span>
   );

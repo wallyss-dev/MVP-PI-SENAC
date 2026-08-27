@@ -103,7 +103,6 @@ O backend estará disponível em `http://localhost:5000/api`.
 ### 6. Instalar e iniciar o frontend
 
 ```bash
-O npm install baixa apenas o frontend
 npm install
 npm run dev
 ```

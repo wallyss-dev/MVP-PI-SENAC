@@ -3,7 +3,6 @@ import { api } from '@/services/api';
 import type { Encontro } from '@/types';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
 import { LoadingSpinner, EmptyState, ConfirmDialog } from '@/components/ui/Common';
 import { Breadcrumb, PageHeader } from '@/components/ui/Breadcrumb';
 import { useNavigate } from 'react-router-dom';
@@ -30,12 +29,12 @@ export function MeetingsPage() {
   };
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in-slow">
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Encontros' }]} />
       <PageHeader
-        title="Encontros"
-        subtitle="Encontros e reuniões dos clubes"
-        action={<Button onClick={() => navigate('/meetings/new')}><Plus className="w-4 h-4" /> Novo Encontro</Button>}
+        title={<>Próximos <span className="italic">Encontros</span></>}
+        subtitle="Reuniões e encontros dos clubes"
+        action={<Button onClick={() => navigate('/meetings/new')}><Plus className="w-4 h-4" strokeWidth={1.5} /> Novo Encontro</Button>}
       />
 
       {loading ? (
@@ -43,32 +42,32 @@ export function MeetingsPage() {
       ) : !encontros || encontros.length === 0 ? (
         <Card>
           <EmptyState
-            icon={<CalendarDays className="w-12 h-12" />}
+            icon={<CalendarDays className="w-10 h-10" strokeWidth={1} />}
             title="Nenhum encontro cadastrado"
             message="Agende o primeiro encontro"
-            action={<Button onClick={() => navigate('/meetings/new')}><Plus className="w-4 h-4" /> Novo Encontro</Button>}
+            action={<Button onClick={() => navigate('/meetings/new')}><Plus className="w-4 h-4" strokeWidth={1.5} /> Novo Encontro</Button>}
           />
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {encontros.map((e) => (
-            <Card key={e.id_encontro} className="hover:shadow-md transition-shadow">
+            <Card key={e.id_encontro} className="group hover:border-ink-200/80">
               <CardBody>
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                    <CalendarDays className="w-5 h-5 text-blue-600" />
+                <div className="flex items-start justify-between mb-8">
+                  <div className="w-10 h-10 rounded-md border border-ink-100/60 bg-cream-100 flex items-center justify-center">
+                    <CalendarDays className="w-5 h-5 text-ink-500" strokeWidth={1.25} />
                   </div>
-                  <Button variant="ghost" size="sm" className="text-red-500 hover:bg-red-50" onClick={() => setDeleteId(e.id_encontro)}>
-                    <Trash2 className="w-3.5 h-3.5" />
+                  <Button variant="ghost" size="sm" className="text-ink-300 hover:text-red-500 hover:bg-red-50" onClick={() => setDeleteId(e.id_encontro)}>
+                    <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
                   </Button>
                 </div>
-                <h3 className="font-semibold text-stone-800 mb-1">{e.livro_titulo}</h3>
-                <p className="text-xs text-stone-500 mb-3">{e.clube_nome}</p>
-                <div className="space-y-1.5 text-xs text-stone-600">
-                  <div className="flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-stone-400" /> {formatDateTime(e.data_hora)}</div>
-                  {e.local_link && <div className="flex items-center gap-2"><MapPin className="w-3.5 h-3.5 text-stone-400" /> <span className="truncate">{e.local_link}</span></div>}
+                <h3 className="font-serif text-2xl font-light text-ink-900 mb-2">{e.livro_titulo}</h3>
+                <p className="text-xs text-ink-400 mb-6">{e.clube_nome}</p>
+                <div className="space-y-3 text-xs text-ink-600">
+                  <div className="flex items-center gap-2.5"><Clock className="w-3.5 h-3.5 text-ink-300" strokeWidth={1.5} /> {formatDateTime(e.data_hora)}</div>
+                  {e.local_link && <div className="flex items-center gap-2.5"><MapPin className="w-3.5 h-3.5 text-ink-300" strokeWidth={1.5} /> <span className="truncate">{e.local_link}</span></div>}
                 </div>
-                {e.descricao && <p className="text-xs text-stone-500 mt-3 line-clamp-2">{e.descricao}</p>}
+                {e.descricao && <p className="text-xs text-ink-400 mt-5 pt-5 border-t border-ink-100/40 line-clamp-2 leading-relaxed">{e.descricao}</p>}
               </CardBody>
             </Card>
           ))}

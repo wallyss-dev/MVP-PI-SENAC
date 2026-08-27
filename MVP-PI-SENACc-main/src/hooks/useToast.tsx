@@ -23,7 +23,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     setToasts((prev) => [...prev, { id, type, message }]);
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 4000);
+    }, 4500);
   }, []);
 
   const removeToast = (id: number) => {
@@ -31,32 +31,32 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   };
 
   const icons = {
-    success: <CheckCircle className="w-5 h-5 text-green-600" />,
-    error: <XCircle className="w-5 h-5 text-red-600" />,
-    warning: <AlertCircle className="w-5 h-5 text-amber-600" />,
-    info: <Info className="w-5 h-5 text-blue-600" />,
+    success: <CheckCircle className="w-4 h-4 text-green-600" strokeWidth={1.5} />,
+    error: <XCircle className="w-4 h-4 text-red-600" strokeWidth={1.5} />,
+    warning: <AlertCircle className="w-4 h-4 text-accent-600" strokeWidth={1.5} />,
+    info: <Info className="w-4 h-4 text-blue-600" strokeWidth={1.5} />,
   };
 
   const borders = {
     success: 'border-l-green-500',
     error: 'border-l-red-500',
-    warning: 'border-l-amber-500',
+    warning: 'border-l-accent-500',
     info: 'border-l-blue-500',
   };
 
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="fixed top-4 right-4 z-[100] flex flex-col gap-2 max-w-sm w-full">
+      <div className="fixed top-5 right-5 z-[100] flex flex-col gap-2.5 max-w-sm w-full">
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`flex items-start gap-3 bg-white rounded-lg shadow-lg border border-l-4 ${borders[toast.type]} p-4 animate-slide-in`}
+            className={`flex items-start gap-3 bg-cream-50 rounded-lg shadow-lg shadow-ink-900/8 border border-l-2 ${borders[toast.type]} border-ink-100/50 px-5 py-4 animate-slide-in`}
           >
             {icons[toast.type]}
-            <p className="text-sm text-gray-700 flex-1">{toast.message}</p>
-            <button onClick={() => removeToast(toast.id)} className="text-gray-400 hover:text-gray-600">
-              <X className="w-4 h-4" />
+            <p className="text-sm text-ink-700 flex-1 leading-relaxed">{toast.message}</p>
+            <button onClick={() => removeToast(toast.id)} className="text-ink-300 hover:text-ink-600 transition-colors duration-300">
+              <X className="w-3.5 h-3.5" strokeWidth={1.5} />
             </button>
           </div>
         ))}

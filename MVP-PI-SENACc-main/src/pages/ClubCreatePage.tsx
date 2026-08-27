@@ -41,14 +41,14 @@ export function ClubCreatePage() {
   };
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in-slow">
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Clubes', to: '/clubs' }, { label: 'Novo Clube' }]} />
-      <PageHeader title="Criar Clube" subtitle="Cadastre um novo clube de leitura" />
+      <PageHeader title={<>Criar <span className="italic">Clube</span></>} subtitle="Cadastre um novo clube de leitura" />
 
       <div className="max-w-2xl">
         <Card>
           <CardBody>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-7">
               <Input label="Nome do Clube *" value={nome} onChange={(e) => setNome(e.target.value)} error={errors.nome} placeholder="Ex: Clube Literário Aurora" />
               <Textarea label="Descrição" value={descricao} onChange={(e) => setDescricao(e.target.value)} rows={4} placeholder="Descreva o propósito do clube..." />
               <Select label="Administrador *" value={idAdmin} onChange={(e) => setIdAdmin(e.target.value)} error={errors.idAdmin}>
@@ -57,9 +57,9 @@ export function ClubCreatePage() {
                   <option key={u.id_usuario} value={u.id_usuario}>{u.nome} ({u.email})</option>
                 ))}
               </Select>
-              <div className="flex gap-2 pt-2">
-                <Button type="button" variant="outline" onClick={() => navigate('/clubs')}><ArrowLeft className="w-4 h-4" /> Cancelar</Button>
-                <Button type="submit" disabled={saving}><Save className="w-4 h-4" /> {saving ? 'Salvando...' : 'Salvar'}</Button>
+              <div className="flex gap-3 pt-6">
+                <Button type="button" variant="outline" onClick={() => navigate('/clubs')}><ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Cancelar</Button>
+                <Button type="submit" disabled={saving}><Save className="w-4 h-4" strokeWidth={1.5} /> {saving ? 'Salvando...' : 'Salvar'}</Button>
               </div>
             </form>
           </CardBody>

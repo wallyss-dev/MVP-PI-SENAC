@@ -50,14 +50,14 @@ export function NewReadingPage() {
   };
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in-slow">
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Leituras', to: '/readings' }, { label: 'Nova Leitura' }]} />
-      <PageHeader title="Nova Leitura" subtitle="Crie uma nova leitura para um clube" />
+      <PageHeader title={<>Nova <span className="italic">Leitura</span></>} subtitle="Crie uma nova leitura para um clube" />
 
       <div className="max-w-2xl">
         <Card>
           <CardBody>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-7">
               <Select label="Clube *" value={form.id_clube} onChange={(e) => setForm({ ...form, id_clube: e.target.value })} error={errors.id_clube}>
                 <option value="">Selecione um clube</option>
                 {clubes?.map((c) => <option key={c.id_clube} value={c.id_clube}>{c.nome}</option>)}
@@ -66,7 +66,7 @@ export function NewReadingPage() {
                 <option value="">Selecione um livro</option>
                 {livros?.map((l) => <option key={l.id_livro} value={l.id_livro}>{l.titulo}</option>)}
               </Select>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
                 <Input label="Data de Início" type="date" value={form.data_inicio} onChange={(e) => setForm({ ...form, data_inicio: e.target.value })} />
                 <Input label="Data de Fim" type="date" value={form.data_fim} onChange={(e) => setForm({ ...form, data_fim: e.target.value })} error={errors.data_fim} />
               </div>
@@ -76,9 +76,9 @@ export function NewReadingPage() {
                 <option value="planejada">Planejada</option>
                 <option value="cancelada">Cancelada</option>
               </Select>
-              <div className="flex gap-2 pt-2">
-                <Button type="button" variant="outline" onClick={() => navigate('/readings')}><ArrowLeft className="w-4 h-4" /> Cancelar</Button>
-                <Button type="submit" disabled={saving}><Save className="w-4 h-4" /> {saving ? 'Salvando...' : 'Salvar'}</Button>
+              <div className="flex gap-3 pt-6">
+                <Button type="button" variant="outline" onClick={() => navigate('/readings')}><ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Cancelar</Button>
+                <Button type="submit" disabled={saving}><Save className="w-4 h-4" strokeWidth={1.5} /> {saving ? 'Salvando...' : 'Salvar'}</Button>
               </div>
             </form>
           </CardBody>

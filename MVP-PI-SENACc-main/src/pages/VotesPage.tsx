@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useApi } from '@/hooks/useApi';
 import { api } from '@/services/api';
-import type { Votacao, Clube, Sugestao } from '@/types';
-import { Card, CardBody, CardHeader } from '@/components/ui/Card';
+import type { Votacao, Clube } from '@/types';
+import { Card, CardBody } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Input, Select } from '@/components/ui/Input';
@@ -39,7 +39,7 @@ export function VotesPage() {
   };
 
   const handleVote = async (opcaoId: number) => {
-    const membroId = 1; // Demo: Ana Silva (membro 1)
+    const membroId = 1;
     try {
       await api.castVote(opcaoId, membroId);
       showToast('Voto registrado com sucesso!', 'success');
@@ -76,12 +76,12 @@ export function VotesPage() {
   };
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in-slow">
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Votações' }]} />
       <PageHeader
-        title="Votações"
-        subtitle="Votações para escolher próximas leituras"
-        action={<Button onClick={() => setModalOpen(true)}><Plus className="w-4 h-4" /> Nova Votação</Button>}
+        title={<>Votações <span className="italic">Abertas</span></>}
+        subtitle="Escolha as próximas leituras dos clubes"
+        action={<Button onClick={() => setModalOpen(true)}><Plus className="w-4 h-4" strokeWidth={1.5} /> Nova Votação</Button>}
       />
 
       {loading ? (
@@ -89,14 +89,14 @@ export function VotesPage() {
       ) : !votacoes || votacoes.length === 0 ? (
         <Card>
           <EmptyState
-            icon={<Vote className="w-12 h-12" />}
+            icon={<Vote className="w-10 h-10" strokeWidth={1} />}
             title="Nenhuma votação"
             message="Crie a primeira votação para um clube"
-            action={<Button onClick={() => setModalOpen(true)}><Plus className="w-4 h-4" /> Nova Votação</Button>}
+            action={<Button onClick={() => setModalOpen(true)}><Plus className="w-4 h-4" strokeWidth={1.5} /> Nova Votação</Button>}
           />
         </Card>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-8">
           {votacoes.map((v) => (
             <Card key={v.id_votacao}>
               <CardBody>
@@ -104,43 +104,43 @@ export function VotesPage() {
                   className="flex items-center justify-between cursor-pointer"
                   onClick={() => handleExpand(v.id_votacao)}
                 >
-                  <div className="flex items-center gap-3">
-                    {expandedId === v.id_votacao ? <ChevronDown className="w-5 h-5 text-stone-400" /> : <ChevronRight className="w-5 h-5 text-stone-400" />}
-                    <div className="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center">
-                      <Vote className="w-5 h-5 text-red-600" />
+                  <div className="flex items-center gap-4">
+                    {expandedId === v.id_votacao ? <ChevronDown className="w-4 h-4 text-ink-400" strokeWidth={1.5} /> : <ChevronRight className="w-4 h-4 text-ink-400" strokeWidth={1.5} />}
+                    <div className="w-10 h-10 rounded-md border border-ink-100/60 bg-cream-100 flex items-center justify-center">
+                      <Vote className="w-5 h-5 text-ink-500" strokeWidth={1.25} />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-stone-800">{v.titulo}</h3>
-                      <p className="text-xs text-stone-500">{v.clube_nome} - {formatDate(v.criado_em)}</p>
+                      <h3 className="font-serif text-2xl font-light text-ink-900">{v.titulo}</h3>
+                      <p className="text-xs text-ink-400 mt-1">{v.clube_nome} — {formatDate(v.criado_em)}</p>
                     </div>
                   </div>
                   <Badge variant={v.aberta ? 'success' : 'default'}>{v.aberta ? 'Aberta' : 'Fechada'}</Badge>
                 </div>
 
                 {expandedId === v.id_votacao && detail?.opcoes && detail.opcoes.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-stone-100 space-y-2">
+                  <div className="mt-8 pt-8 border-t border-ink-100/40 space-y-4">
                     {detail.opcoes.map((op) => {
-                        const totalVotos = detail.opcoes!.reduce((sum, o) => sum + (o.total_votos || 0), 0);
-                        const pct = totalVotos > 0 ? Math.round(((op.total_votos || 0) / totalVotos) * 100) : 0;
-                        return (
-                          <div key={op.id_opcao} className="flex items-center gap-3 p-3 rounded-lg bg-stone-50">
-                            <div className="flex-1">
-                              <p className="text-sm font-medium text-stone-800">{op.livro_titulo || op.titulo_sugerido}</p>
-                              <div className="flex items-center gap-2 mt-1">
-                                <div className="flex-1 h-2 bg-stone-200 rounded-full overflow-hidden">
-                                  <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
-                                </div>
-                                <span className="text-xs text-stone-500 w-20 text-right">{op.total_votos || 0} votos ({pct}%)</span>
+                      const totalVotos = detail.opcoes!.reduce((sum, o) => sum + (o.total_votos || 0), 0);
+                      const pct = totalVotos > 0 ? Math.round(((op.total_votos || 0) / totalVotos) * 100) : 0;
+                      return (
+                        <div key={op.id_opcao} className="flex items-center gap-5 p-5 rounded-md bg-cream-100/60">
+                          <div className="flex-1">
+                            <p className="font-serif text-lg font-medium text-ink-800">{op.livro_titulo || op.titulo_sugerido}</p>
+                            <div className="flex items-center gap-3 mt-3">
+                              <div className="flex-1 h-px bg-ink-100/60 overflow-hidden">
+                                <div className="h-full bg-accent-500 transition-all duration-500" style={{ width: `${pct}%` }} />
                               </div>
+                              <span className="text-[11px] text-ink-400 w-28 text-right tracking-wider-editorial uppercase">{op.total_votos || 0} votos — {pct}%</span>
                             </div>
-                            {v.aberta && (
-                              <Button size="sm" variant="outline" onClick={() => handleVote(op.id_opcao)}>
-                                <CheckCircle className="w-3.5 h-3.5" /> Votar
-                              </Button>
-                            )}
                           </div>
-                        );
-                      })}
+                          {v.aberta && (
+                            <Button size="sm" variant="outline" onClick={() => handleVote(op.id_opcao)}>
+                              <CheckCircle className="w-3.5 h-3.5" strokeWidth={1.5} /> Votar
+                            </Button>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </CardBody>
@@ -150,17 +150,17 @@ export function VotesPage() {
       )}
 
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Nova Votação">
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-7">
           <Select label="Clube *" value={form.id_clube} onChange={(e) => setForm({ ...form, id_clube: e.target.value })} error={errors.id_clube}>
             <option value="">Selecione um clube</option>
             {clubes?.map((c) => <option key={c.id_clube} value={c.id_clube}>{c.nome}</option>)}
           </Select>
-          <Input label="Título da Votação *" value={form.titulo} onChange={(e) => setForm({ ...form, titulo: e.target.value })} error={errors.titulo} placeholder="Ex: Próxima leitura - Setembro 2026" />
-          <div className="flex items-center gap-2">
-            <input type="checkbox" id="aberta" checked={form.aberta} onChange={(e) => setForm({ ...form, aberta: e.target.checked })} className="rounded border-stone-300" />
-            <label htmlFor="aberta" className="text-sm text-stone-700">Votação aberta imediatamente</label>
+          <Input label="Título da Votação *" value={form.titulo} onChange={(e) => setForm({ ...form, titulo: e.target.value })} error={errors.titulo} placeholder="Ex: Próxima leitura — Setembro 2026" />
+          <div className="flex items-center gap-3">
+            <input type="checkbox" id="aberta" checked={form.aberta} onChange={(e) => setForm({ ...form, aberta: e.target.checked })} className="rounded border-ink-200 text-accent-500 focus:ring-accent-400" />
+            <label htmlFor="aberta" className="text-sm text-ink-600">Votação aberta imediatamente</label>
           </div>
-          <div className="flex justify-end gap-2 pt-2">
+          <div className="flex justify-end gap-3 pt-4">
             <Button type="button" variant="outline" onClick={() => setModalOpen(false)}>Cancelar</Button>
             <Button type="submit" disabled={saving}>{saving ? 'Salvando...' : 'Salvar'}</Button>
           </div>

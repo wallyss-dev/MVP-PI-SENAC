@@ -44,24 +44,24 @@ export function NewMeetingPage() {
   };
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in-slow">
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Encontros', to: '/meetings' }, { label: 'Novo Encontro' }]} />
-      <PageHeader title="Novo Encontro" subtitle="Agende um encontro para uma leitura" />
+      <PageHeader title={<>Novo <span className="italic">Encontro</span></>} subtitle="Agende um encontro para uma leitura" />
 
       <div className="max-w-2xl">
         <Card>
           <CardBody>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-7">
               <Select label="Leitura *" value={form.id_leitura} onChange={(e) => setForm({ ...form, id_leitura: e.target.value })} error={errors.id_leitura}>
                 <option value="">Selecione uma leitura</option>
-                {leituras?.map((l) => <option key={l.id_leitura} value={l.id_leitura}>{l.livro_titulo} - {l.clube_nome}</option>)}
+                {leituras?.map((l) => <option key={l.id_leitura} value={l.id_leitura}>{l.livro_titulo} — {l.clube_nome}</option>)}
               </Select>
               <Input label="Data e Hora *" type="datetime-local" value={form.data_hora} onChange={(e) => setForm({ ...form, data_hora: e.target.value })} error={errors.data_hora} />
               <Input label="Link do Encontro" value={form.local_link} onChange={(e) => setForm({ ...form, local_link: e.target.value })} placeholder="https://meet.example.com/..." />
               <Textarea label="Descrição" value={form.descricao} onChange={(e) => setForm({ ...form, descricao: e.target.value })} rows={3} placeholder="Pauta do encontro..." />
-              <div className="flex gap-2 pt-2">
-                <Button type="button" variant="outline" onClick={() => navigate('/meetings')}><ArrowLeft className="w-4 h-4" /> Cancelar</Button>
-                <Button type="submit" disabled={saving}><Save className="w-4 h-4" /> {saving ? 'Salvando...' : 'Salvar'}</Button>
+              <div className="flex gap-3 pt-6">
+                <Button type="button" variant="outline" onClick={() => navigate('/meetings')}><ArrowLeft className="w-4 h-4" strokeWidth={1.5} /> Cancelar</Button>
+                <Button type="submit" disabled={saving}><Save className="w-4 h-4" strokeWidth={1.5} /> {saving ? 'Salvando...' : 'Salvar'}</Button>
               </div>
             </form>
           </CardBody>

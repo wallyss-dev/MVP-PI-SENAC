@@ -4,7 +4,33 @@
 
 @layer base {
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #faf8f4;
+    color: #2a2620;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fraunces', Georgia, serif;
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: 'Fraunces', Georgia, serif;
+  }
+  .font-sans {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .text-editorial {
+    letter-spacing: 0.08em;
+  }
+  .text-wider-editorial {
+    letter-spacing: 0.12em;
+  }
+  .text-widest-editorial {
+    letter-spacing: 0.18em;
   }
 }
 
@@ -14,29 +40,49 @@
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-slow {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-slide-in {
-  animation: slide-in 0.3s ease-out;
+  animation: slide-in 0.35s ease-out;
 }
 
 .animate-fade-in {
-  animation: fade-in 0.2s ease-out;
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-fade-in-slow {
+  animation: fade-in-slow 0.5s ease-out;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f5f5f4;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
-  border-radius: 4px;
+  background: #c4bdb0;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a29e;
+  background: #a8a095;
+}
+
+::selection {
+  background-color: #f49b3a;
+  color: #1a1814;
+}
+
+.login-bookshelf-bg {
+  filter: sepia(12%) saturate(95%) brightness(0.96);
+  opacity: 0;
+  animation: fade-in-slow 0.7s ease-out forwards;
 }

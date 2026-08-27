@@ -31,45 +31,48 @@ export function ClubsPage() {
   if (loading) return <LoadingSpinner size="lg" />;
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in-slow">
       <Breadcrumb items={[{ label: 'Dashboard', to: '/dashboard' }, { label: 'Clubes' }]} />
       <PageHeader
-        title="Clubes de Leitura"
+        title={<>Meus <span className="italic">Clubes</span></>}
         subtitle="Gerencie os clubes cadastrados"
-        action={<Button onClick={() => navigate('/clubs/new')}><Plus className="w-4 h-4" /> Novo Clube</Button>}
+        action={<Button onClick={() => navigate('/clubs/new')}><Plus className="w-4 h-4" strokeWidth={1.5} /> Novo Clube</Button>}
       />
 
       {!clubes || clubes.length === 0 ? (
         <Card>
           <EmptyState
-            icon={<Users className="w-12 h-12" />}
+            icon={<Users className="w-10 h-10" strokeWidth={1} />}
             title="Nenhum clube cadastrado"
             message="Crie o primeiro clube de leitura para começar"
-            action={<Button onClick={() => navigate('/clubs/new')}><Plus className="w-4 h-4" /> Criar Clube</Button>}
+            action={<Button onClick={() => navigate('/clubs/new')}><Plus className="w-4 h-4" strokeWidth={1.5} /> Criar Clube</Button>}
           />
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {clubes.map((clube) => (
-            <Card key={clube.id_clube} className="hover:shadow-md transition-shadow">
+            <Card key={clube.id_clube} className="group hover:border-ink-200/80">
               <CardBody>
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-11 h-11 rounded-lg bg-amber-100 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-amber-600" />
+                <div className="flex items-start justify-between mb-8">
+                  <div className="w-11 h-11 rounded-md border border-ink-100/60 bg-cream-100 flex items-center justify-center">
+                    <Users className="w-5 h-5 text-ink-500" strokeWidth={1.25} />
                   </div>
                   <Badge variant={clube.total_membros && clube.total_membros > 0 ? 'success' : 'default'}>
                     {clube.total_membros || 0} membros
                   </Badge>
                 </div>
-                <h3 className="font-semibold text-stone-800 mb-1">{clube.nome}</h3>
-                <p className="text-sm text-stone-500 line-clamp-2 mb-3">{clube.descricao || 'Sem descrição'}</p>
-                <p className="text-xs text-stone-400 mb-4">Admin: {clube.admin_nome || '-'}</p>
-                <div className="flex gap-2">
+                <h3 className="font-serif text-2xl font-light text-ink-900 mb-3 group-hover:text-accent-700 transition-colors duration-300">{clube.nome}</h3>
+                <p className="text-sm text-ink-400 leading-relaxed line-clamp-2 mb-6">{clube.descricao || 'Sem descrição'}</p>
+                <div className="flex items-center gap-2 mb-8 pb-8 border-b border-ink-100/40">
+                  <span className="text-[10px] text-ink-400 tracking-widest-editorial uppercase">Admin</span>
+                  <span className="text-xs text-ink-600">{clube.admin_nome || '-'}</span>
+                </div>
+                <div className="flex gap-3">
                   <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate(`/clubs/${clube.id_clube}`)}>
-                    <Eye className="w-3.5 h-3.5" /> Ver
+                    <Eye className="w-3.5 h-3.5" strokeWidth={1.5} /> Ver
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={() => setDeleteId(clube.id_clube)} className="text-red-600 hover:bg-red-50">
-                    <Trash2 className="w-3.5 h-3.5" />
+                  <Button variant="ghost" size="sm" onClick={() => setDeleteId(clube.id_clube)} className="text-ink-300 hover:text-red-500 hover:bg-red-50">
+                    <Trash2 className="w-3.5 h-3.5" strokeWidth={1.5} />
                   </Button>
                 </div>
               </CardBody>
